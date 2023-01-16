@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loading from "./Loading";
+import LoadingArticles from "./LoadingArticles";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingBar from "react-top-loading-bar";
@@ -30,7 +31,7 @@ export class News extends Component {
   static propTypes = {};
 
   async updateNews() {
-    this.setState({loading:true});
+    this.setState({ loading: true });
     this.props.setProgress(10);
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&apiKey=b4d047d672bd4402bb75046d558e9373`;
     let data = await fetch(url);
@@ -43,7 +44,7 @@ export class News extends Component {
       loading: false,
       page: this.state.page + 1,
     });
-    this.props.setProgress(100)
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {
@@ -65,8 +66,21 @@ export class News extends Component {
   render() {
     return (
       <>
-        <h1 className="text-center">TOP HEADLINES</h1>
+        <h1 className="text-center">TOP HEADLINES - {this.props.category.toUpperCase()}</h1>
         {this.state.loading && <Loading />}
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4">
+              {this.state.loading && <LoadingArticles />}
+            </div>
+            <div className="col-md-4">
+              {this.state.loading && <LoadingArticles />}
+            </div>
+            <div className="col-md-4">
+              {this.state.loading && <LoadingArticles />}
+            </div>
+          </div>
+        </div>
         <InfiniteScroll
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
@@ -79,6 +93,7 @@ export class News extends Component {
                 return (
                   <div className="col-md-4" key={element.url}>
                     <NewsItem
+                      loading={this.state.loading}
                       title={element.title ? element.title : ""}
                       description={
                         element.description ? element.description : ""
@@ -89,6 +104,7 @@ export class News extends Component {
                           : "https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1190&q=80"
                       }
                       newsurl={element.url}
+                      source={element.source.name}
                     />
                   </div>
                 );

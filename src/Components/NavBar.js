@@ -8,7 +8,7 @@ export class NavBar extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
-          <div className="container-fluid">
+          <div className="container-fluid ">
             <div className="navbar-brand" to="#">
               News
             </div>
