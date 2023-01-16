@@ -64,9 +64,15 @@ export class News extends Component {
   };
 
   render() {
+    const mystyle = {
+      margin: "auto",
+      width: "50%",
+    };
     return (
       <>
-        <h1 className="text-center">TOP HEADLINES - {this.props.category.toUpperCase()}</h1>
+        <h1 className="text-center">
+          TOP HEADLINES - {this.props.category.toUpperCase()}
+        </h1>
         {this.state.loading && <Loading />}
         <div className="container">
           <div className="row">
@@ -91,21 +97,23 @@ export class News extends Component {
             <div className="row">
               {this.state.articles.map((element) => {
                 return (
-                  <div className="col-md-4" key={element.url}>
-                    <NewsItem
-                      loading={this.state.loading}
-                      title={element.title ? element.title : ""}
-                      description={
-                        element.description ? element.description : ""
-                      }
-                      imageurl={
-                        element.urlToImage
-                          ? element.urlToImage
-                          : "https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1190&q=80"
-                      }
-                      newsurl={element.url}
-                      source={element.source.name}
-                    />
+                  <div className="col-md-4 " key={element.url}>
+                    <div style={mystyle}>
+                      <NewsItem
+                        loading={this.state.loading}
+                        title={element.title ? element.title : ""}
+                        description={
+                          element.description ? element.description : ""
+                        }
+                        imageurl={
+                          element.urlToImage
+                            ? element.urlToImage
+                            : "https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1190&q=80"
+                        }
+                        newsurl={element.url}
+                        source={element.source.name}
+                      />
+                    </div>
                   </div>
                 );
               })}
